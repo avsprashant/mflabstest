@@ -1,0 +1,11 @@
+argo-cd:
+  dex:
+    enabled: false #no need to connect to external auth providers
+  server:
+    extraArgs:
+      - --insecure  #insecure since we'll go with http without TLS in local
+    config:
+      repositories: |
+        - type: helm
+          name: argo-cd
+          url: https://argoproj.github.io/argo-helm

@@ -25,7 +25,7 @@
 
 ## Deployment in prod (manually)
 1) clone repo.
-2) cd deployment
+2) cd manifests
 3) helm install "releaseName"  . --kubeconfig "~/.kube/your kubeconfig file" -n "namespace"
 4) In case you are getting error like "exec plugin: invalid apiVersion "client.authentication.k8s.io/v1alpha1".
 Then run below:
@@ -39,10 +39,5 @@ kubectl apply -f test.yaml --kubeconfig "~/.kube/your kubeconfig file" -n "names
 10) curl -v http://localhost:8081/movie
 
 ## Deployment in prod (using GitOps/ArgoCD)
-1) kubectl create namespace argocd
-2) kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.21/manifests/install.yaml
-3) check if all pods are fine using "kubectl get all --all-namespaces"
-4) kubectl port-forward svc/argocd-server 9000:80 --kubeconfig ~/.kube/config -n argocd
-4) For our v2.4.21 login credentials "admin" and get password from "kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo"
-5) For earlier versions password is the pod name of "argocd-server"
-6) 
+1) cd argocd
+2) refer instructions there
