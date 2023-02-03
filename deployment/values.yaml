@@ -1,0 +1,41 @@
+registry:
+  name: avsprashant
+  private: false
+  pullSecret: xxxx
+
+replicaCount: 1
+
+image:
+  name: containersolution
+  tag: latest
+  pullPolicy: Always
+
+hpa:
+  minReplicas: 1
+  maxReplicas: 1
+
+service:
+  type: NodePort
+  port1:
+    name: http
+    port: 80
+    targetPort: 8081
+  port2:
+    name: http
+    port: 27017
+    targetPort: 27017
+
+database:
+  table: "prashant"
+  username: admin
+  password: admin
+
+serviceMonitor:
+  interval: "30s"
+  path: "/"
+
+profiles:
+  active: development
+  development:
+    storage:
+      size: 500M

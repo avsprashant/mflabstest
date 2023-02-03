@@ -1,0 +1,12 @@
+apiVersion: v2
+name: ContainerSolutionsApp
+version: 0.0.1
+description: This is an application
+icon: xxxxx
+keywords:
+  - internal
+  - application
+  - container
+home: https://gitlab.com/avsprashant19/containersolutionstest
+sources:
+  - https://gitlab.com/avsprashant19/containersolutionstest

@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  app:
+    container_name: containersolution-app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file: .env
+    ports:
+      - 8081:8081
+    depends_on: 
+      - db
+    environment:
+      - PORT=8081
+      - DB_URL=mongodb://admin:admin@db:27017
+      - TABLE=prashant
+    networks:
+      - containersolution
+
+  db:
+    container_name: containersolution-mongodb
+    image: mongo
+    volumes:
+      - containersolution_data:/data/db
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    networks:
+      - containersolution
+    ports:
+      - 27017:27017
+volumes:
+  containersolution_data:
+
+networks:
+  containersolution:
+    driver: bridge

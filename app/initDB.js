@@ -1,0 +1,36 @@
+const mongoose = require('mongoose');
+require('dotenv').config();  
+
+const db_url = process.env.DB_URL;
+
+module.exports = async () => {
+  mongoose
+    .connect(db_url, {
+      // dbName: process.env.DB_NAME,
+      // user: process.env.DB_USER,
+      // pass: process.env.DB_PASS,
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    })
+    .then(() => {
+      console.log('Mongodb connected.');
+    })
+    .catch(err => console.log(err.message));
+
+  mongoose.connection.on('error', err => {
+    console.log(err.message);
+  });
+
+  mongoose.connection.on('disconnected', () => {
+    console.log('Mongoose connection is disconnected.');
+  });
+
+  process.on('SIGINT', () => {
+    mongoose.connection.close(() => {
+      console.log(
+        'Mongoose connection is disconnected due to app termination.'
+      );
+      process.exit(0);
+    });
+  });
+};
