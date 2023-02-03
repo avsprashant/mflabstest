@@ -1,19 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  name: mflabstest
+  namespace: argocd
 spec:
   destination:
+    namespace: mflabstest
     server: https://kubernetes.default.svc
-    namespace: default
   project: default
   source:
-    path: argocd/apps/
+    path: manifests
     repoURL: https://github.com/avsprashant/mflabstest
     targetRevision: HEAD
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    automated: {}
+

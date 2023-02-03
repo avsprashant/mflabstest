@@ -9,4 +9,5 @@
 5) kubectl port-forward svc/argocd-server 9000:80 --kubeconfig ~/.kube/config -n argocd
 6) For our v2.4.21 login credentials "admin" and get password from "kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo". For earlier versions 
 password is the pod name of "argocd-server".
-7) 
+7) "helm template apps/ | kubectl apply -f -" deploys our apps
+8) 
