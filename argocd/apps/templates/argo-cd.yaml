@@ -11,7 +11,7 @@
 #     namespace: argocd
 #   project: default
 #   source:
-#     path: 2.argocd/charts/argo-cd
+#     path: argocd/charts/argo-cd
 #     repoURL: https://github.com/avsprashant/mflabstest
 #     targetRevision: HEAD
 #   syncPolicy:
