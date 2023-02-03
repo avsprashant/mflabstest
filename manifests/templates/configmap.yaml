@@ -1,7 +1,0 @@
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   creationTimestamp: null
-#   name: {{ .Release.Name }}-config
-# data:
-#   DB_URL: {{ .Values.database.db_url | quote }}

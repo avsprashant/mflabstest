@@ -13,5 +13,7 @@ spec:
     repoURL: https://github.com/avsprashant/mflabstest
     targetRevision: HEAD
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
+      selfHeal: true
 

@@ -1,3 +1,5 @@
+namespace: mflabstest
+
 registry:
   name: avsprashant
   private: false
