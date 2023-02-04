@@ -23,7 +23,7 @@
 10) kindly use this dump prashants.dump.
 11) curl -v http://localhost:8081/movie
 
-## Deployment in prod (manually)
+## Deployment in test namespace (manually)
 1) clone repo.
 2) cd manifests
 3) helm install "releaseName"  . --kubeconfig "~/.kube/your kubeconfig file" -n "namespace" --create-namespace

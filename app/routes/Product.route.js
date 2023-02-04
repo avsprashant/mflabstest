@@ -11,11 +11,11 @@ const swaggerJSDocs = YAML.load(swagger_path);
 
 router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSDocs));
 
-router.get('/people',ProductController.getAllPeople)
-router.post('/people',ProductController.addPeople)
-router.get('/people/:id',ProductController.getPeopleById)
-router.delete('/people/:id',ProductController.deletePersonById)
-router.put('/people/:id',ProductController.updatePersonById)
+router.get('/movie',ProductController.getAllMovie)
+router.post('/movie',ProductController.addMovie)
+// router.get('/people/:id',ProductController.getPeopleById)
+// router.delete('/people/:id',ProductController.deletePersonById)
+// router.put('/people/:id',ProductController.updatePersonById)
 
 router.all('*', ProductController.restAllInvalidPaths);
 

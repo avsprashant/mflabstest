@@ -1,11 +1,11 @@
-const people = require('../models/peopleModel');
+const people = require('../models/movieModel');
 
 module.exports = {
 
-    addPeople : async (req,res) => {
-        const {survived,name,sex,age,siblingsOrSpousesAboard,parentsOrChildrenAboard,fare} = req.body ;
+    addMovie : async (req,res) => {
+        const {Rank,Title,Genre,Description,Director,Actors,Year,Runtime,Rating,Votes,Revenue,Metascore} = req.body ;
         try{
-            const newData = new people({survived,name,sex,age,siblingsOrSpousesAboard,parentsOrChildrenAboard,fare});
+            const newData = new people({Rank,Title,Genre,Description,Director,Actors,Year,Runtime,Rating,Votes,Revenue,Metascore});
             await newData.save();
             return res.json(await people.find())
         }
@@ -15,7 +15,7 @@ module.exports = {
         }
     },
 
-    getAllPeople : async (req,res) => {
+    getAllMovie : async (req,res) => {
         try {
             const allData = await people.find();
             return res.json(allData);
@@ -25,38 +25,38 @@ module.exports = {
         }
     },
 
-    getPeopleById : async (req,res) => {
-        try{
-            const Data = await people.findById(req.params.id)
-            return res.json(Data);
-        }
-        catch(err){
-            console.log(err.message);
-            return res.status(400).json({message: "Not found"});
-        }
-    },
+    // getPeopleById : async (req,res) => {
+    //     try{
+    //         const Data = await people.findById(req.params.id)
+    //         return res.json(Data);
+    //     }
+    //     catch(err){
+    //         console.log(err.message);
+    //         return res.status(400).json({message: "Not found"});
+    //     }
+    // },
 
-    deletePersonById : async (req,res)=>{
-        try{
-            await people.findByIdAndDelete(req.params.id);
-            return res.json(await people.find())
-        }
-        catch(err){
-            console.log(err.message);
-            return res.status(400).json({message: "Not found"});
-        }
-    },
+    // deletePersonById : async (req,res)=>{
+    //     try{
+    //         await people.findByIdAndDelete(req.params.id);
+    //         return res.json(await people.find())
+    //     }
+    //     catch(err){
+    //         console.log(err.message);
+    //         return res.status(400).json({message: "Not found"});
+    //     }
+    // },
 
-    updatePersonById : async (req,res)=>{
-        try {
-            const {survived,name,sex,age,siblingsOrSpousesAboard,parentsOrChildrenAboard,fare} = req.body ;
-            const result = await people.findByIdAndUpdate(req.params.id,{survived,name,sex,age,siblingsOrSpousesAboard,parentsOrChildrenAboard,fare});
-            res.send(result);
-          } catch (error) {
-            console.log(error.message);
-            return res.status(400).json({message: "ID Not found"});
-          }
-    },
+    // updatePersonById : async (req,res)=>{
+    //     try {
+    //         const {survived,name,sex,age,siblingsOrSpousesAboard,parentsOrChildrenAboard,fare} = req.body ;
+    //         const result = await people.findByIdAndUpdate(req.params.id,{survived,name,sex,age,siblingsOrSpousesAboard,parentsOrChildrenAboard,fare});
+    //         res.send(result);
+    //       } catch (error) {
+    //         console.log(error.message);
+    //         return res.status(400).json({message: "ID Not found"});
+    //       }
+    // },
 
     restAllInvalidPaths : (req, res) => {
         const notFoundResponse = {
