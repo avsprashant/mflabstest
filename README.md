@@ -26,17 +26,13 @@
 ## Deployment in prod (manually)
 1) clone repo.
 2) cd manifests
-3) helm install "releaseName"  . --kubeconfig "~/.kube/your kubeconfig file" -n "namespace"
+3) helm install "releaseName"  . --kubeconfig "~/.kube/your kubeconfig file" -n "namespace" --create-namespace
 4) In case you are getting error like "exec plugin: invalid apiVersion "client.authentication.k8s.io/v1alpha1".
 Then run below:
-helm template "releaseName" . > test.yaml
+helm template "releaseName" . -n "namespace" > test.yaml
 kubectl apply -f test.yaml --kubeconfig "~/.kube/your kubeconfig file" -n "namespace"
-5) kubectl cp ../app/prashants.dump "namespace"/mflabs-0:tmp/prashants.dump -c mongo --kubeconfig "~/.kube/your kubeconfig file" -n "namespace"
-6) kubectl exec -it mflabs-0  --kubeconfig "~/.kube/your kubeconfig file" -n "namespace" bash
-7) cd /tmp/
-8) mongorestore -u admin -p admin --archive < prashants.dump 
-9) kubectl port-forward svc/mflabs-svc 8081:80 --kubeconfig "~/.kube/your kubeconfig file" -n "namespace"
-10) curl -v http://localhost:8081/movie
+5) kubectl port-forward svc/mflabs-svc 8081:80 --kubeconfig "~/.kube/your kubeconfig file" -n "namespace"
+6) curl -v http://localhost:8081/movie
 
 ## Deployment in prod (using GitOps/ArgoCD)
 1) cd argocd
