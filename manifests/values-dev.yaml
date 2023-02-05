@@ -2,5 +2,5 @@ namespace: dev
 
 image:
   name: mflabstest
-  tag: 8205aeaed21b377a87561ea8e3ed3018a7a9006b475ee3dffde1eafa40210c0d
+  tag: main
   pullPolicy: Always
