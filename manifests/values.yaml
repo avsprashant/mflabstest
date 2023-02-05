@@ -7,11 +7,6 @@ registry:
 
 replicaCount: 1
 
-image:
-  name: containersolution
-  tag: latest
-  pullPolicy: Always
-
 hpa:
   minReplicas: 1
   maxReplicas: 1

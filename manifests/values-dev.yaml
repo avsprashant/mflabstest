@@ -1,1 +1,6 @@
 namespace: dev
+
+image:
+  name: mflabstest
+  tag: master
+  pullPolicy: Always
