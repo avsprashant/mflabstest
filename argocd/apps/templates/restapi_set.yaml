@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: restapi
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - namespace: dev
+        url: https://kubernetes.default.svc
+      - namespace: prod
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: '{{"{{"}}namespace{{"}}"}}-restapi'
+    spec:
+      project: default
+      source:
+        path: manifests
+        repoURL: https://github.com/avsprashant/mflabstest
+        targetRevision: HEAD
+        helm:
+          releaseName: mflabstest
+          valueFiles:
+            - values.yaml
+            - values-{{"{{"}}namespace{{"}}"}}.yaml
+      destination:
+        server: '{{"{{"}}url{{"}}"}}'
+        namespace: '{{"{{"}}namespace{{"}}"}}'
