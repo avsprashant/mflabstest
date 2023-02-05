@@ -33,4 +33,5 @@ jobs:
           context: ./app
           file: ./app/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mflabstest:${{ env.BRANCH }}-${{ env.HASH }}
+          # tags: ${{ secrets.DOCKERHUB_USERNAME }}/mflabstest:${{ env.BRANCH }}-${{ env.HASH }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mflabstest:${{ env.BRANCH }}
