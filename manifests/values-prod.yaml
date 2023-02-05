@@ -2,5 +2,5 @@ namespace: prod
 
 image:
   name: mflabstest
-  tag: master
+  tag: main-569ea3
   pullPolicy: Always
