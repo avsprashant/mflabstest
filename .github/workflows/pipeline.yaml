@@ -13,7 +13,7 @@ jobs:
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV; echo "HASH=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV             
 
       - name: Get branch name
-        run: echo 'The branch name is' ${{ env.BRANCH }}; echo 'hash is' ${{ env.HASH }
+        run: echo 'The branch name is' ${{ env.BRANCH }}; echo 'hash is' ${{ env.HASH }}
 
       - name: checkout repo
         uses: actions/checkout@v3
