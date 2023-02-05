@@ -2,5 +2,5 @@ namespace: prod
 
 image:
   name: mflabstest
-  tag: main-569ea3
+  tag: 8205aeaed21b377a87561ea8e3ed3018a7a9006b475ee3dffde1eafa40210c0d
   pullPolicy: Always
