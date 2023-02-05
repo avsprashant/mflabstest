@@ -17,6 +17,11 @@ jobs:
 
       - name: checkout repo
         uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@master
+        with:
+          platforms: all
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -33,5 +38,5 @@ jobs:
           context: ./app
           file: ./app/Dockerfile
           push: true
-          # tags: ${{ secrets.DOCKERHUB_USERNAME }}/mflabstest:${{ env.BRANCH }}-${{ env.HASH }}
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mflabstest:${{ env.BRANCH }}
+          platforms: linux/amd64,linux/arm64,linux/ppc64le
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mflabstest:${{ env.BRANCH }}-${{ env.HASH }}
