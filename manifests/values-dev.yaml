@@ -2,5 +2,5 @@ namespace: dev
 
 image:
   name: mflabstest
-  tag: main
+  tag: main-ff2216
   pullPolicy: Always
