@@ -1,7 +1,7 @@
 ## MFLabsTest
 
 # Stack/Tools used:
-1) Github               - since the task was shared in github
+1) Github CI            - since the task was shared in github
 2) MERN                 - App is built in MERN
 3) Helm                 - Helm is a standard in k8s to deploy apps
 4) swagger              - API documentation
