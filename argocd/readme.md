@@ -5,10 +5,13 @@
 3) helm install argocd .  -n argocd  --create-namespace
 4) check if all pods are fine using "kubectl get all --all-namespaces"
 5) kubectl port-forward svc/argocd-server 9090:80 --kubeconfig ~/.kube/config -n argocd
-6) For our v2.4.21 login credentials "admin" and get password from "kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo". For earlier versions 
+6) goto http://localhost:9090
+7) For our v2.4.21 login with credentials "admin" and get password from "kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo". For earlier versions 
 password is the pod name of "argocd-server".
 
 ## Deploy Kind Application manifests 
-7) "helm template ../apps/ | kubectl apply -f -" deploys our apps
-8) kubectl port-forward svc/mflabstest-svc 8081:80 --kubeconfig ~/.kube/config -n dev
-9) curl -v http://localhost:8081/movie
+8) "helm template ../apps/ | kubectl apply -f -" deploys our apps
+9) Now we have deployed our restapi in dev and prod namespaces.
+If we change image.tag in values-dev.yaml, only dev release gets updated.
+10) kubectl port-forward svc/mflabstest-svc 8081:80 --kubeconfig ~/.kube/config -n dev
+11) curl -v http://localhost:8081/movie

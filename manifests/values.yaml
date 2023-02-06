@@ -36,3 +36,8 @@ profiles:
   development:
     storage:
       size: 500M
+
+image:
+  name: mflabstest
+  tag: dev-eec1c3
+  pullPolicy: Always
