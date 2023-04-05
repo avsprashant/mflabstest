@@ -39,5 +39,5 @@ profiles:
 
 image:
   name: mflabstest
-  tag: dev-eec1c3
+  tag: main-eec1c3
   pullPolicy: Always
