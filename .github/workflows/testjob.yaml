@@ -1,0 +1,14 @@
+name: test job
+on:
+  workflow_dispatch:
+    inputs:
+      linter:
+        description: type linter
+  push:
+
+jobs:
+  build:
+    uses: avsprashant/mflabstest/test.yaml@main
+    # uses: avsprashant/mflabstest/.github/workflows/testjob.yaml@main
+    with:
+      aws-profile: uk
