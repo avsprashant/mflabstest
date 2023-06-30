@@ -1,0 +1,29 @@
+name: Testing
+
+on:
+  workflow_call:
+    inputs:
+      linter:
+        type: boolean
+
+jobs:
+  Build-Test:
+    name: testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # SCM versioning requires tags
+          fetch-depth: 0
+
+      - name: ${{ inputs.linter }} report
+        if:  ${{ inputs.linter }}
+        run: |
+              cat << EOF >> test_report.md
+              ### ${{ inputs.linter }} Linting Violations
+              \`\`\`
+              $(ruff check .)
+              \`\`\`
+              EOF
+        shell: bash
+        
