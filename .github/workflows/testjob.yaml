@@ -11,4 +11,4 @@ jobs:
 #     uses: avsprashant/mflabstest/test.yaml@main
     uses: avsprashant/mflabstest/.github/workflows/test.yaml@main
     with:
-      linter: kjhb
+      linter: true
