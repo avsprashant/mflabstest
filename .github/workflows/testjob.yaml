@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    uses: avsprashant/mflabstest/test.yaml@main
-    # uses: avsprashant/mflabstest/.github/workflows/testjob.yaml@main
+#     uses: avsprashant/mflabstest/test.yaml@main
+    uses: avsprashant/mflabstest/.github/workflows/testjob.yaml@main
     with:
       aws-profile: uk
