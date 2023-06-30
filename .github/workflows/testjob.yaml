@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    uses: avsprashant/mflabstest/test.yaml@main
-#     uses: avsprashant/mflabstest/.github/workflows/test.yaml@main
+#     uses: avsprashant/mflabstest/test.yaml@main
+    uses: avsprashant/mflabstest/.github/workflows/test.yaml@main
     with:
       linter: true
