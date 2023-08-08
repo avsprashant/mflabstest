@@ -16,6 +16,20 @@ jobs:
           # SCM versioning requires tags
           fetch-depth: 0
 
+      - uses: actions/checkout@v3
+        with:
+          # SCM versioning requires tags
+          fetch-depth: 0
+
+      - uses: actions/checkout@v3
+        with:
+          # SCM versioning requires tags
+          fetch-depth: 0
+
+      - name: check dirs
+        shell: bash
+        run: ls -lart
+        
       - name: ${{ inputs.linter }} report
         if:  ${{ inputs.linter }}
         run: |
