@@ -28,7 +28,11 @@ jobs:
 
       - name: check dirs
         shell: bash
-        run: ls -lart
+        run: |
+          ls -l /home/runner/work/_temp
+          pwd
+          ls -lart
+          
         
       - name: ${{ inputs.linter }} report
         if:  ${{ inputs.linter }}
