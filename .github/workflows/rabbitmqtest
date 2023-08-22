@@ -1,5 +1,5 @@
 name: rabbitmq
-on: [push]
+on: push
 
 jobs:
   build:
@@ -15,5 +15,3 @@ jobs:
           version: '3.11'
           ports: '1883:1883 8883:8883'
           container-name: 'mqtt'
-  
-      - run: test
