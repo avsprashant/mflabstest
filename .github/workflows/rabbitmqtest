@@ -1,5 +1,4 @@
-name: Run tests
-
+name: rabbitmq
 on: [push]
 
 jobs:
