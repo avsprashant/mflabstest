@@ -4,7 +4,7 @@ registries:
     type: docker-registry
     url: registry.hub.docker.com
     username: avsprashant
-    password: ${{secrets.DOCKERHUB_PASSWORD}}
+    password: ${{secrets.DOCKERHUB_TOKEN}}
 updates:
   - package-ecosystem: "docker"
     directory: "/app"
