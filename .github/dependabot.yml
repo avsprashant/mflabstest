@@ -6,8 +6,8 @@ registries:
     username: avsprashant
     password: ${{secrets.DOCKERHUB_PASSWORD}}
 updates:
-  - package-ecosystem: "docker" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "docker"
+    directory: "/app"
     registries:
       - dockerhub
     schedule:
