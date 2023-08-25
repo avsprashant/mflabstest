@@ -1,0 +1,20 @@
+name: My Workflow
+
+on: [push]
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository 1
+        uses: actions/checkout@v3
+
+      - name: Checkout repository 2
+        uses: actions/checkout@v3
+        with:
+          repo: octocat/Hello-World
+
+      - name: Do something with both repositories
+        run: |
+          # Do something that requires access to both repositories
+          echo "Repository contents: $(git ls-files -z)"
