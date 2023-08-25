@@ -17,5 +17,4 @@ jobs:
 
       - name: Do something with both repositories
         run: |
-          # Do something that requires access to both repositories
-          echo "Repository contents: $(git ls-files -z)"
+          echo "Repository contents: $(ls -lart /home/runner/work/mflabstest/mflabstest)"
