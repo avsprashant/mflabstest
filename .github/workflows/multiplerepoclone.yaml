@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository 2
         uses: actions/checkout@v3
         with:
-          repo: octocat/Hello-World
+          repository: octocat/Hello-World
 
       - name: Do something with both repositories
         run: |
