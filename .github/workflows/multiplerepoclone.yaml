@@ -13,6 +13,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: octocat/Hello-World
+          path: Hello-World
 
       - name: Do something with both repositories
         run: |
