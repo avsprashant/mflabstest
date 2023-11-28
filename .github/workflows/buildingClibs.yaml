@@ -1,0 +1,22 @@
+name: buildingClibs
+on: push
+
+jobs:
+  run-tests:
+    name: testing
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}
+    steps:
+      - name: building
+        run: |
+          set -e
+          sudo apt-get update -y && sudo apt-get install -y cmake wget
+          pushd /tmp
+          wget https://github.com/scipopt/soplex/archive/refs/tags/release-604.zip
+          unzip release-604.zip
+          mkdir /tmp/soplex-release-604/build/
+          pushd /tmp/soplex-release-604/build/
+          sudo cmake .. -DCMAKE_INSTALL_PREFIX=/opt/scip/
+          sudo make
