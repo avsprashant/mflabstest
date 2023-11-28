@@ -38,4 +38,5 @@ jobs:
           ls -lart /tmp/soplex-release-604/build/bin
           ls -lart /tmp/scip-803/build/lib
           ls -lart /tmp/scip-803/build/bin
-          ls -lart /opt/scip
+          ls -lart /opt/scip/bin
+          ls -lart /opt/scip/lib
