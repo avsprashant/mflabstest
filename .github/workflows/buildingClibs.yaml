@@ -25,5 +25,5 @@ jobs:
         shell: bash
         run: |
           set -e
-          ll /tmp/soplex-release-604/build/lib
-          ll /tmp/soplex-release-604/build/bin
+          ls -lart /tmp/soplex-release-604/build/lib
+          ls -lart /tmp/soplex-release-604/build/bin
