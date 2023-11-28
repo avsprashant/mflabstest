@@ -20,3 +20,10 @@ jobs:
           pushd /tmp/soplex-release-604/build/
           sudo cmake .. -DCMAKE_INSTALL_PREFIX=/opt/scip/
           sudo make
+
+      - name: Built targets
+        shell: bash
+        run: |
+          set -e
+          ll /tmp/soplex-release-604/build/lib
+          ll /tmp/soplex-release-604/build/bin
