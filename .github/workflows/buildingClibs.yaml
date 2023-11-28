@@ -20,6 +20,15 @@ jobs:
           pushd /tmp/soplex-release-604/build/
           sudo cmake .. -DCMAKE_INSTALL_PREFIX=/opt/scip/
           sudo make
+          ###
+          popd
+          wget https://github.com/scipopt/scip/archive/refs/tags/v803.zip
+          unzip v803.zip
+          mkdir /tmp/scip-803/build/
+          pushd /tmp/scip-803/build/
+          sudo cmake .. -DCMAKE_INSTALL_PREFIX=/opt/scip/ -DAUTOBUILD=on -DSOPLEX_DIR=/tmp/soplex-release-604/build
+          sudo make
+          sudo make install
 
       - name: Built targets
         shell: bash
@@ -27,3 +36,6 @@ jobs:
           set -e
           ls -lart /tmp/soplex-release-604/build/lib
           ls -lart /tmp/soplex-release-604/build/bin
+          ls -lart /tmp/scip-803/build/lib
+          ls -lart /tmp/scip-803/build/bin
+          ls -lart /opt/scip
