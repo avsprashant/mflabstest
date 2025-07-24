@@ -51,27 +51,28 @@ cronJob:
 
                 ## Used to allow cross-account IAM role assumption for S3 access
                 - name: AWS_PROFILE
-                  value: "uk-dev"
+                  value: "uk-prod"
                 - name: AWS_CONFIG_FILE
                   value: /habitat/config/aws_config
 
-              command: ["intraday-trades"]
-                  
-              ## Used to allow cross-account IAM role assumption for S3 access
+              command: ["/bin/sh", "-c", "sleep 36000"]
+
+              # Used to allow cross-account IAM role assumption for S3 access
               volumeMounts:
                 - name: aws-config-file
                   mountPath: /habitat/config/
 
               resources:
                 requests:
-                  memory: "150Mi"
+                  memory: "450Mi"
+                  cpu: "100m"
                 limits:
-                  memory: "150Mi"
-
+                  memory: "450Mi"
+          ## Used to allow cross-account IAM role assumption for S3 access
           volumes:
             - name: aws-config-file
               configMap:
-                name: epex-intraday-consumer-configmap
+                name: forecast-da-train-predict-configmap
 
 ## Used to allow cross-account IAM role assumption for S3 access
 configMap:
