@@ -1,6 +1,7 @@
 cronJob:
   enabled: true
-  schedule: "15 2,3,5,7,17 * * *"
+  ## Runs every hour at the 25th and 55th minute, of every day, expect between 1-2am as there is a lack of data availability in that period
+  schedule: "25,55 0,2-23 * * *"
   timeZone: "Europe/London"
   startingDeadlineSeconds: 120
   jobTemplate:
@@ -8,55 +9,43 @@ cronJob:
       template:
         spec:
           containers:
-            - name: epex-intraday-consumer
-              image: 479162328326.dkr.ecr.eu-west-2.amazonaws.com/epex_ftp_consumer
-              version: 1.0.0
+            - name: forecast-da-train-predict
+              image: 479162328326.dkr.ecr.eu-west-2.amazonaws.com/dayaheadforecaster
+              version: 0.5.0
               env:
-                - name: TAG
-                  value: "dev"
                 - name: LOG_LEVEL
                   value: "INFO"
-                - name: S3_BUCKET
-                  value: "habitatenergy-epex-lake-dev"
-                - name: MARKET_DATA_DB_URL
+                - name: TAG
+                  value: "dev"
+                - name: DAY_AHEAD_FORECASTS_S3_BUCKET
+                  value: "habitatenergy-dayaheadforecasts"
+                - name: MARKET_DB_SECRET
                   valueFrom:
                     secretKeyRef:
-                      name: rds-dataconsumer-market-data-readwrite-keyval
-                      key: url
-                - name: EPEX_HOST
+                      name: rds-dataconsumer-market-data-readonly
+                      key: key
+                - name: ELEXON_DB_SECRET
                   valueFrom:
                     secretKeyRef:
-                      name: epex-spot-credentials
-                      key: host
-                - name: EPEX_USERNAME
+                      name: rds-dataconsumer-elexon-push-readonly
+                      key: key
+                - name: FORECAST_DB_SECRET
                   valueFrom:
                     secretKeyRef:
-                      name: epex-spot-credentials
-                      key: username
-                - name: EPEX_PASSWORD
-                  valueFrom:
-                    secretKeyRef:
-                      name: epex-spot-credentials
-                      key: password
-                - name: EPEX_PUBLIC_KEYTYPE
-                  valueFrom:
-                    secretKeyRef:
-                      name: epex-spot-credentials
-                      key: public_keytype
-                - name: EPEX_PUBLIC_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: epex-spot-credentials
-                      key: public_key
-
+                      name: rds-forecast-readwrite
+                      key: key
                 ## Used to allow cross-account IAM role assumption for S3 access
                 - name: AWS_PROFILE
                   value: "uk-prod"
                 - name: AWS_CONFIG_FILE
                   value: /habitat/config/aws_config
 
-              command: ["/bin/sh", "-c", "sleep 36000"]
+              command: ["/bin/sh"]
 
+              args: [
+                "-c",
+                "/habitat/.venv/bin/python3 -m habitatenergy.day_ahead_forecaster.train_predict --auction=HALF_HOURLY && /habitat/.venv/bin/python3 -m habitatenergy.day_ahead_forecaster.train_predict --auction=HOURLY"
+              ]
               # Used to allow cross-account IAM role assumption for S3 access
               volumeMounts:
                 - name: aws-config-file
@@ -74,18 +63,17 @@ cronJob:
               configMap:
                 name: forecast-da-train-predict-configmap
 
-## Used to allow cross-account IAM role assumption for S3 access
 configMap:
   enabled: true
   data:
     aws_config: |
       [profile src]
       region=eu-west-2
-      role_arn=arn:aws:iam::642966392923:role/epex-intraday-consumer-role
+      role_arn=arn:aws:iam::642966392923:role/forecast-da-train-predict-role
       web_identity_token_file=/var/run/secrets/eks.amazonaws.com/serviceaccount/token
 
-      [profile uk-dev]
-      role_arn=arn:aws:iam::479162328326:role/epex-intraday-consumer-dev-role
+      [profile uk-prod]
+      role_arn=arn:aws:iam::479162328326:role/forecast-da-train-predict-dev-role
       source_profile=src
       region=eu-west-2
 
@@ -93,7 +81,8 @@ serviceAccount:
   enabled: true
   metadata:
     additionalAnnotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::642966392923:role/epex-intraday-consumer-role
+      eks.amazonaws.com/role-arn: arn:aws:iam::642966392923:role/forecast-da-train-predict-role
   secrets: 
-    - rds-dataconsumer-market-data-readwrite-keyval
-    - epex-spot-credentials
+    - rds-dataconsumer-market-data-readonly
+    - rds-dataconsumer-elexon-push-readonly
+    - rds-forecast-readwrite
