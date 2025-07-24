@@ -1,0 +1,98 @@
+cronJob:
+  enabled: true
+  schedule: "15 2,3,5,7,17 * * *"
+  timeZone: "Europe/London"
+  startingDeadlineSeconds: 120
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: epex-intraday-consumer
+              image: 479162328326.dkr.ecr.eu-west-2.amazonaws.com/epex_ftp_consumer
+              version: 1.0.0
+              env:
+                - name: TAG
+                  value: "dev"
+                - name: LOG_LEVEL
+                  value: "INFO"
+                - name: S3_BUCKET
+                  value: "habitatenergy-epex-lake-dev"
+                - name: MARKET_DATA_DB_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: rds-dataconsumer-market-data-readwrite-keyval
+                      key: url
+                - name: EPEX_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: epex-spot-credentials
+                      key: host
+                - name: EPEX_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: epex-spot-credentials
+                      key: username
+                - name: EPEX_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: epex-spot-credentials
+                      key: password
+                - name: EPEX_PUBLIC_KEYTYPE
+                  valueFrom:
+                    secretKeyRef:
+                      name: epex-spot-credentials
+                      key: public_keytype
+                - name: EPEX_PUBLIC_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: epex-spot-credentials
+                      key: public_key
+
+                ## Used to allow cross-account IAM role assumption for S3 access
+                - name: AWS_PROFILE
+                  value: "uk-dev"
+                - name: AWS_CONFIG_FILE
+                  value: /habitat/config/aws_config
+
+              command: ["intraday-trades"]
+                  
+              ## Used to allow cross-account IAM role assumption for S3 access
+              volumeMounts:
+                - name: aws-config-file
+                  mountPath: /habitat/config/
+
+              resources:
+                requests:
+                  memory: "150Mi"
+                limits:
+                  memory: "150Mi"
+
+          volumes:
+            - name: aws-config-file
+              configMap:
+                name: epex-intraday-consumer-configmap
+
+## Used to allow cross-account IAM role assumption for S3 access
+configMap:
+  enabled: true
+  data:
+    aws_config: |
+      [profile src]
+      region=eu-west-2
+      role_arn=arn:aws:iam::642966392923:role/epex-intraday-consumer-role
+      web_identity_token_file=/var/run/secrets/eks.amazonaws.com/serviceaccount/token
+
+      [profile uk-dev]
+      role_arn=arn:aws:iam::479162328326:role/epex-intraday-consumer-dev-role
+      source_profile=src
+      region=eu-west-2
+
+serviceAccount: 
+  enabled: true
+  metadata:
+    additionalAnnotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::642966392923:role/epex-intraday-consumer-role
+  secrets: 
+    - rds-dataconsumer-market-data-readwrite-keyval
+    - epex-spot-credentials
